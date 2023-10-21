@@ -48,6 +48,67 @@ class TestUsuario(TestCase):
                          'Por favor ingresar todos los campos')
         self.assertEqual(response.status_code, 400)
 
+    @patch('src.views.views.requests.post')
+    def test_login_successful(self, mock_post):
+
+        login_data = {
+            "id": 1,
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+            "type": "1"
+        }
+
+        user_login = {
+            "email": self.data_factory.email(),
+            "password": self.data_factory.password(),
+        }
+
+        mock_post.return_value.json.return_value = login_data
+        mock_post.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/login', json=user_login)
+
+        self.assertEqual(response.json, login_data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_missing_fields(self):
+
+        user_login = {
+            "email": self.data_factory.email(),
+        }
+
+        response = self.client.post('/abcjobs/login', json=user_login)
+
+        self.assertEqual(response.json['mensaje'],
+                         'Por favor ingresar todos los campos')
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.views.requests.post')
+    def test_validate_email_successful(self, mock_post):
+
+        validate_data = {
+            "mensaje": "Usuario no existe"
+        }
+
+        email_validate = {
+            "email": self.data_factory.email()
+        }
+
+        mock_post.return_value.json.return_value = validate_data
+        mock_post.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/validate', json=email_validate)
+
+        self.assertEqual(response.json, validate_data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_validate_email_missing_fields(self):
+                
+            response = self.client.post('/abcjobs/validate')
+    
+            self.assertEqual(response.json['mensaje'],
+                            'Por favor ingresar todos los campos')
+            self.assertEqual(response.status_code, 400)
+
     def test_fail_page(self):
 
         endpoint_usuario = "/abcjobs/fail"
