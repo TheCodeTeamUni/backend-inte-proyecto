@@ -39,6 +39,58 @@ class VistaSignUp(Resource):
             return {'mensaje': 'Por favor ingresar todos los campos', 'error': str(e)}, 400
 
 
+class VistaLogin(Resource):
+
+    def post(self):
+        # Inicia sesión en la aplicación: /abcjobs/login
+
+        try:
+            email = request.json['email']
+            userpass = request.json['password']
+
+            userLogin = {
+                "email": email,
+                "password": userpass
+            }
+
+            try:
+                response = requests.post(
+                    f'http://{path_user}/users/login', json=userLogin)
+
+                return response.json(), response.status_code
+
+            except Exception as e:
+                return {'mensaje': str(e)}, response.status_code
+
+        except Exception as e:
+            return {'mensaje': 'Por favor ingresar todos los campos', 'error': str(e)}, 400
+
+
+class VistaValidate(Resource):
+
+    def post(self):
+        # Valida que el correo ingresado no exista en la aplicación: /abcjobs/validate
+
+        try:
+            email = request.json['email']
+
+            userEmail = {
+                "email": email
+            }
+
+            try:
+                response = requests.post(
+                    f'http://{path_user}/users/validate', json=userEmail)
+
+                return response.json(), response.status_code
+
+            except Exception as e:
+                return {'mensaje': str(e)}, response.status_code
+
+        except Exception as e:
+            return {'mensaje': 'Por favor ingresar todos los campos', 'error': str(e)}, 400
+
+
 class VistaPong(Resource):
 
     def get(self):
