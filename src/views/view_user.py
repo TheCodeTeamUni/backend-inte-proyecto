@@ -36,7 +36,7 @@ class VistaSignUp(Resource):
                 return {'mensaje': str(e)}, response.status_code
 
         except Exception as e:
-            return {'mensaje': 'Por favor ingresar todos los campos', 'error': str(e)}, 400
+            return {'error': str(e)}, 400
 
 
 class VistaLogin(Resource):

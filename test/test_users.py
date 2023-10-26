@@ -1,4 +1,3 @@
-import json
 from unittest import TestCase
 from faker import Faker
 from unittest.mock import patch
@@ -11,7 +10,7 @@ class TestUsuario(TestCase):
         self.data_factory = Faker()
         self.client = app.test_client()
 
-    @patch('src.views.views.requests.post')
+    @patch('src.views.view_user.requests.post')
     def test_signup_successful(self, mock_post):
 
         signup_data = {
@@ -44,11 +43,9 @@ class TestUsuario(TestCase):
 
         response = self.client.post('/abcjobs/signup', json=new_user)
 
-        self.assertEqual(response.json['mensaje'],
-                         'Por favor ingresar todos los campos')
         self.assertEqual(response.status_code, 400)
 
-    @patch('src.views.views.requests.post')
+    @patch('src.views.view_user.requests.post')
     def test_login_successful(self, mock_post):
 
         login_data = {
@@ -82,7 +79,7 @@ class TestUsuario(TestCase):
                          'Por favor ingresar todos los campos')
         self.assertEqual(response.status_code, 400)
 
-    @patch('src.views.views.requests.post')
+    @patch('src.views.view_user.requests.post')
     def test_validate_email_successful(self, mock_post):
 
         validate_data = {
@@ -102,12 +99,12 @@ class TestUsuario(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_validate_email_missing_fields(self):
-                
-            response = self.client.post('/abcjobs/validate')
-    
-            self.assertEqual(response.json['mensaje'],
-                            'Por favor ingresar todos los campos')
-            self.assertEqual(response.status_code, 400)
+
+        response = self.client.post('/abcjobs/validate')
+
+        self.assertEqual(response.json['mensaje'],
+                         'Por favor ingresar todos los campos')
+        self.assertEqual(response.status_code, 400)
 
     def test_fail_page(self):
 
