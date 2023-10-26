@@ -9,7 +9,7 @@
 6. To deactivate the virtual enviroment, type `deactivate`
 7. To remove all packages, type: `pip freeze | xargs pip uninstall -y`
 
-## Create image users
+## Create image integrador
 1. Create image users: `docker build -t inte_app .`
 
 
