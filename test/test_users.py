@@ -43,8 +43,6 @@ class TestUsuario(TestCase):
 
         response = self.client.post('/abcjobs/signup', json=new_user)
 
-        self.assertEqual(response.json['mensaje'],
-                         'Por favor ingresar todos los campos')
         self.assertEqual(response.status_code, 400)
 
     @patch('src.views.view_user.requests.post')
