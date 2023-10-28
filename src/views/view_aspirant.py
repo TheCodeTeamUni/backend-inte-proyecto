@@ -9,6 +9,7 @@ path_user = os.getenv('USERS_PATH', 'localhost:3001') if os.environ.get(
 path_aspirant = os.getenv('ASPIRANTS_PATH', 'localhost:3002') if os.environ.get(
     'ASPIRANTS_PATH') != 'default' else 'localhost:3002'
 
+
 class VistaAspirantes(Resource):
 
     def post(self):
@@ -33,7 +34,8 @@ class VistaAspirantes(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 400
-        
+
+
 class VistaWorkExperience(Resource):
 
     def post(self):
@@ -58,4 +60,3 @@ class VistaWorkExperience(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 400
-
