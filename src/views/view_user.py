@@ -91,6 +91,24 @@ class VistaValidate(Resource):
             return {'mensaje': 'Por favor ingresar todos los campos', 'error': str(e)}, 400
 
 
+class VistaMe(Resource):
+
+    def get(self):
+        # Retorna la información del usuario logueado: /abcjobs/me
+
+        try:
+            token = request.headers.get('Authorization', None)[7:]
+            headers = {'Authorization': 'Bearer {0}'.format(token)}
+            content = requests.get(
+                f'http://{path_user}/users/me', headers=headers)
+            response = content.json()
+
+            return response, content.status_code
+
+        except Exception as e:
+            return {'error': str(e)}, 400
+
+
 class VistaPong(Resource):
 
     def get(self):
