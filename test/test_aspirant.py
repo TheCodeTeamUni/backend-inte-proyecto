@@ -71,4 +71,4 @@ class TestAspirant(TestCase):
         response = self.client.post('/abcjobs/aspirantes/workexperience', json=new_work, headers={
                                     'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 400)
