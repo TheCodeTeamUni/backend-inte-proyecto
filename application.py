@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from src.views import VistaSignUp, VistaLogin, VistaValidate, VistaPong, VistaMe
-from src.views import VistaAspirantes, VistaWorkExperience
+from src.views import VistaPersonalInformation, VistaWorkExperience, VistaEducation, VistaSkill
 
 application = create_app('default')
 app_context = application.app_context()
@@ -13,7 +13,9 @@ cors = CORS(application)
 
 api = Api(application)
 api.add_resource(VistaWorkExperience, '/abcjobs/aspirantes/workexperience')
-api.add_resource(VistaAspirantes, '/abcjobs/aspirantes/personal')
+api.add_resource(VistaPersonalInformation, '/abcjobs/aspirantes/personal')
+api.add_resource(VistaEducation, '/abcjobs/aspirantes/education')
+api.add_resource(VistaSkill, '/abcjobs/aspirantes/skill')
 api.add_resource(VistaValidate, '/abcjobs/validate')
 api.add_resource(VistaSignUp, '/abcjobs/signup')
 api.add_resource(VistaLogin, '/abcjobs/login')
