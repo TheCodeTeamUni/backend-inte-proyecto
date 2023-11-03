@@ -180,7 +180,7 @@ class VistaSkill(Resource):
             return {'error': str(e)}, 400
 
     def get(self):
-        # Obtiene habilidades de un aspirante: GET /abcjobs/aspirantes/education
+        # Obtiene habilidades de un aspirante: GET /abcjobs/aspirantes/skill
         try:
             token = request.headers.get('Authorization', None)[7:]
             headers = {'Authorization': 'Bearer {0}'.format(token)}

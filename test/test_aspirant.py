@@ -203,3 +203,183 @@ class TestAspirant(TestCase):
             '/abcjobs/aspirantes/workexperience', headers={'Authorization': 'Bearer {}'.format(token)})
 
         self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_education(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "UsuarioPrueba0",
+            "email": "usuarioprueba0@mail.com",
+            "type": "1"
+        }
+
+        new_education = {
+            "typeEducation": 'Formal',
+            "level": 'Maestria',
+            "title": self.data_factory.job(),
+            "institution": self.data_factory.company(),
+            "grade": True,
+            "startDate": '01/01/2010',
+            "endDate": '01/01/2012'
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/aspirantes/education', json=new_education, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_education_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        new_education = {
+            "typeEducation": 'Formal',
+            "level": 'Maestria',
+            "title": self.data_factory.job(),
+            "institution": self.data_factory.company(),
+            "grade": True,
+            "startDate": '01/01/2010',
+            "endDate": '01/01/2012'
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.post('/abcjobs/aspirantes/education', json=new_education, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_education(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "UsuarioPrueba0",
+            "email": "usuarioprueba0@mail.com",
+            "type": "1"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get(
+            '/abcjobs/aspirantes/education', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_education_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get(
+            '/abcjobs/aspirantes/education', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_skill(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "UsuarioPrueba0",
+            "email": "usuarioprueba0@mail.com",
+            "type": "1"
+        }
+
+        new_skill = {
+            "skill": self.data_factory.job(),
+            "level": self.data_factory.text(),
+            "experience": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/aspirantes/skill', json=new_skill, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_skill_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        new_skill = {
+            "skill": self.data_factory.job(),
+            "level": self.data_factory.text(),
+            "experience": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.post('/abcjobs/aspirantes/skill', json=new_skill, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_skill(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "UsuarioPrueba0",
+            "email": "usuarioprueba0@mail.com",
+            "type": "1"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get(
+            '/abcjobs/aspirantes/skill', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_skill_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get(
+            '/abcjobs/aspirantes/skill', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
