@@ -7,6 +7,7 @@ WORKDIR /app
 # Set enviroment variables
 ENV USERS_PATH default
 ENV ASPIRANTS_PATH default
+ENV PROJECT_PATH default
 
 # Install pip requirements
 RUN pip install --upgrade pip
