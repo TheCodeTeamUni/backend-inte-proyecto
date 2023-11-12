@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from src.views import VistaSignUp, VistaLogin, VistaValidate, VistaPong, VistaMe
 from src.views import VistaPersonalInformation, VistaWorkExperience, VistaEducation, VistaSkill
 from src.views import VistaProject
+from src.views import VistaSearchSkill, VistaSearchAspirant
 
 application = create_app('default')
 app_context = application.app_context()
@@ -13,6 +14,7 @@ app_context.push()
 cors = CORS(application)
 
 api = Api(application)
+api.add_resource(VistaPong, '/')
 
 # Endpoints para aspirantes
 api.add_resource(VistaWorkExperience, '/abcjobs/aspirantes/workexperience')
@@ -28,7 +30,11 @@ api.add_resource(VistaValidate, '/abcjobs/validate')
 api.add_resource(VistaSignUp, '/abcjobs/signup')
 api.add_resource(VistaLogin, '/abcjobs/login')
 api.add_resource(VistaMe, '/abcjobs/me')
-api.add_resource(VistaPong, '/')
+
+# Endpoints para búsqueda
+api.add_resource(VistaSearchAspirant, '/abcjobs/search/aspirant/<int:idUser>')
+api.add_resource(VistaSearchSkill, '/abcjobs/search/<string:Skill>')
+
 
 jwt = JWTManager(application)
 
