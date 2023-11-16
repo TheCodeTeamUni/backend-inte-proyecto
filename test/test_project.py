@@ -99,3 +99,94 @@ class TestProject(TestCase):
             '/abcjobs/company/project', headers={'Authorization': 'Bearer {}'.format(token)})
 
         self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_aspirant_project(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "CompanyPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "2"
+        }
+
+        new_aspirant = {
+            "idUser": 1,
+            "name": self.data_factory.name(),
+            "lastName": self.data_factory.name(),
+            "role": self.data_factory.name(),
+            "notes": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/company/project/1', json=new_aspirant, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_post_aspirant_project_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        new_aspirant = {
+            "idUser": 1,
+            "name": self.data_factory.name(),
+            "lastName": self.data_factory.name(),
+            "role": self.data_factory.name(),
+            "notes": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.post('/abcjobs/company/project/1', json=new_aspirant, headers={
+                                    'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_aspirants_project(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "CompanyPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "2"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get('/abcjobs/company/project/1', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_aspirants_project_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get('/abcjobs/company/project/1', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
