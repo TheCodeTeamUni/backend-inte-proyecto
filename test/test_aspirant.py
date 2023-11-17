@@ -383,3 +383,40 @@ class TestAspirant(TestCase):
             '/abcjobs/aspirantes/skill', headers={'Authorization': 'Bearer {}'.format(token)})
 
         self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_aspirants(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 2,
+            "username": "CompanyPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "2"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get(
+            '/abcjobs/aspirantes', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    @patch('src.views.view_aspirant.requests.get')
+    def test_get_aspitants_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get(
+            '/abcjobs/aspirantes', headers={'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
