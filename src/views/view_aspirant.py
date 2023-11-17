@@ -200,3 +200,27 @@ class VistaSkill(Resource):
 
         except Exception as e:
             return {'error': str(e)}, 400
+
+
+class VistaAspirantes(Resource):
+    def get(self):
+        # Obtiene los aspirantes: GET /abcjobs/aspirantes
+        try:
+            token = request.headers.get('Authorization', None)[7:]
+            headers = {'Authorization': 'Bearer {0}'.format(token)}
+            content = requests.get(
+                f'http://{path_user}/users/me', headers=headers)
+            response = content.json()
+
+            if content.status_code == 200:
+
+                if response['type'] != '2':
+                    return {'error': 'No esta autorizado para esta acción'}, 400
+
+            response = requests.get(
+                f'http://{path_aspirant}/aspirant', headers={'Content-Type': 'application/json'})
+
+            return response.json(), response.status_code
+
+        except Exception as e:
+            return {'error': str(e)}, 400

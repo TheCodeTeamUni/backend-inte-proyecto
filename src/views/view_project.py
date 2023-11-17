@@ -23,6 +23,10 @@ class VistaProject(Resource):
             response = content.json()
 
             if content.status_code == 200:
+
+                if response['type'] != '2':
+                    return {'error': 'El usuario no es una empresa'}, 400
+
                 idUser = response['id']
                 responsePersonal = requests.post(
                     f'http://{path_project}/project/{idUser}', json=project, headers={'Content-Type': 'application/json'})
@@ -72,6 +76,8 @@ class VistaAspiranteProyecto(Resource):
 
             if content.status_code == 200:
                 # TODO: Validar que el usuario sea el dueño del proyecto, falta el GET para obtener un proyecto
+                if response['type'] != '2':
+                    return {'error': 'El usuario no es una empresa'}, 400
 
                 responsePersonal = requests.post(
                     f'http://{path_project}/project/aspirant/{idProject}', json=aspirant, headers={'Content-Type': 'application/json'})
@@ -85,7 +91,7 @@ class VistaAspiranteProyecto(Resource):
             return {'error': str(e)}, 400
 
     def get(self, idProject):
-        # Obtiene los aspirantes de un proyecto: GET /abcjobs/company/project/<int:idProject>
+        # Obtiene los aspirantes e información de un proyecto: GET /abcjobs/company/project/<int:idProject>
         try:
             token = request.headers.get('Authorization', None)[7:]
             headers = {'Authorization': 'Bearer {0}'.format(token)}
@@ -95,6 +101,8 @@ class VistaAspiranteProyecto(Resource):
 
             if content.status_code == 200:
                 # TODO: Validar que el usuario sea el dueño del proyecto, falta el GET para obtener un proyecto
+                if response['type'] != '2':
+                    return {'error': 'El usuario no es una empresa'}, 400
 
                 responsePersonal = requests.get(
                     f'http://{path_project}/project/aspirant/{idProject}', headers={'Content-Type': 'application/json'})

@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from src.views import VistaSignUp, VistaLogin, VistaValidate, VistaPong, VistaMe
-from src.views import VistaPersonalInformation, VistaWorkExperience, VistaEducation, VistaSkill
+from src.views import VistaPersonalInformation, VistaWorkExperience, VistaEducation, VistaSkill, VistaAspirantes
 from src.views import VistaProject, VistaAspiranteProyecto
 from src.views import VistaSearchSkill, VistaSearchAspirant
 
@@ -21,6 +21,7 @@ api.add_resource(VistaWorkExperience, '/abcjobs/aspirantes/workexperience')
 api.add_resource(VistaPersonalInformation, '/abcjobs/aspirantes/personal')
 api.add_resource(VistaEducation, '/abcjobs/aspirantes/education')
 api.add_resource(VistaSkill, '/abcjobs/aspirantes/skill')
+api.add_resource(VistaAspirantes, '/abcjobs/aspirantes')
 
 # Endpoints para proyectos
 api.add_resource(VistaAspiranteProyecto, '/abcjobs/company/project/<int:idProject>')
