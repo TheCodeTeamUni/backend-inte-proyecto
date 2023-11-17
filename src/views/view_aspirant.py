@@ -217,8 +217,10 @@ class VistaAspirantes(Resource):
                 if response['type'] != '2':
                     return {'error': 'No esta autorizado para esta acción'}, 400
 
-            response = requests.get(
-                f'http://{path_aspirant}/aspirant', headers={'Content-Type': 'application/json'})
+                response = requests.get(
+                    f'http://{path_aspirant}/aspirant', headers={'Content-Type': 'application/json'})
+            else:
+                return response, content.status_code
 
             return response.json(), response.status_code
 
