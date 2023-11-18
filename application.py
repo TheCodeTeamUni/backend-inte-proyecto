@@ -6,6 +6,7 @@ from src.views import VistaSignUp, VistaLogin, VistaValidate, VistaPong, VistaMe
 from src.views import VistaPersonalInformation, VistaWorkExperience, VistaEducation, VistaSkill, VistaAspirantes
 from src.views import VistaProject, VistaAspiranteProyecto
 from src.views import VistaSearchSkill, VistaSearchAspirant
+from src.views import VistaInterview, VistaInterviewAspirant
 
 application = create_app('default')
 app_context = application.app_context()
@@ -24,7 +25,8 @@ api.add_resource(VistaSkill, '/abcjobs/aspirantes/skill')
 api.add_resource(VistaAspirantes, '/abcjobs/aspirantes')
 
 # Endpoints para proyectos
-api.add_resource(VistaAspiranteProyecto, '/abcjobs/company/project/<int:idProject>')
+api.add_resource(VistaAspiranteProyecto,
+                 '/abcjobs/company/project/<int:idProject>')
 api.add_resource(VistaProject, '/abcjobs/company/project')
 
 # Endpoints para usuarios
@@ -36,6 +38,10 @@ api.add_resource(VistaMe, '/abcjobs/me')
 # Endpoints para búsqueda
 api.add_resource(VistaSearchAspirant, '/abcjobs/search/aspirant/<int:idUser>')
 api.add_resource(VistaSearchSkill, '/abcjobs/search/<string:Skill>')
+
+# Endpoints para entrevistas
+api.add_resource(VistaInterviewAspirant, '/abcjobs/aspirant/interview')
+api.add_resource(VistaInterview, '/abcjobs/company/interview')
 
 
 jwt = JWTManager(application)
