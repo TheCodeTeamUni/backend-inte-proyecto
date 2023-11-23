@@ -10,7 +10,7 @@ class TestInterview(TestCase):
         self.data_factory = Faker()
         self.client = app.test_client()
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_post_interview(self, mock_get):
 
         token = "miToken"
@@ -40,7 +40,7 @@ class TestInterview(TestCase):
 
         self.assertEqual(response.status_code, 400)
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_post_interview_fail(self, mock_get):
 
         token = "miToken"
@@ -67,7 +67,7 @@ class TestInterview(TestCase):
 
         self.assertEqual(response.status_code, 400)
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_get_interviews_company(self, mock_get):
 
         token = "miToken"
@@ -87,7 +87,7 @@ class TestInterview(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_get_interviews_company_fail(self, mock_get):
 
         token = "miToken"
@@ -104,7 +104,7 @@ class TestInterview(TestCase):
 
         self.assertEqual(response.status_code, 400)
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_get_interviews_aspirant(self, mock_get):
 
         token = "miToken"
@@ -124,7 +124,7 @@ class TestInterview(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    @patch('src.views.view_aspirant.requests.get')
+    @patch('src.views.view_interview.requests.get')
     def test_get_interviews_aspirant_fail(self, mock_get):
 
         token = "miToken"
@@ -137,6 +137,127 @@ class TestInterview(TestCase):
         mock_get.return_value.status_code = 400
 
         response = self.client.get('/abcjobs/aspirant/interview', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_get_interview_detail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "usuarioPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "1"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get('/abcjobs/interview/1', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_get_interview_detail_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get('/abcjobs/interview/1', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_post_interview_result(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "CompanyPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "2"
+        }
+
+        data = {
+            "result": self.data_factory.text(),
+            "notes": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.post('/abcjobs/interview/result/1', json=data, headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_post_interview_result_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        data = {
+            "result": self.data_factory.text(),
+            "notes": self.data_factory.text()
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.post('/abcjobs/interview/result/1', json=data, headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 400)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_get_interview_result(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "id": 1,
+            "username": "CompanyPrueba0",
+            "email": "companyprueba0@mail.com",
+            "type": "2"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 200
+
+        response = self.client.get('/abcjobs/interview/result/1', headers={
+            'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
+
+        self.assertEqual(response.status_code, 200)
+
+    @patch('src.views.view_interview.requests.get')
+    def test_get_interview_result_fail(self, mock_get):
+
+        token = "miToken"
+
+        user_data = {
+            "error": "Error"
+        }
+
+        mock_get.return_value.json.return_value = user_data
+        mock_get.return_value.status_code = 400
+
+        response = self.client.get('/abcjobs/interview/result/1', headers={
             'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(token)})
 
         self.assertEqual(response.status_code, 400)
