@@ -79,9 +79,6 @@ class VistaTestAspirant(Resource):
 
             if content.status_code == 200:
 
-                if response['type'] != '1':
-                    return {'error': 'Usuario no autorizado'}, 401
-
                 idAspirant = response['id']
                 responsePersonal = requests.get(
                     f'http://{path_test}/test/aspirant/{idAspirant}', headers={'Content-Type': 'application/json'})
