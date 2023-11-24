@@ -8,6 +8,7 @@ from src.views import VistaProject, VistaAspiranteProyecto
 from src.views import VistaSearchSkill, VistaSearchAspirant
 from src.views import VistaInterview, VistaInterviewAspirant, VistaInterviewDetail, VistaInterviewResult
 from src.views import VistaPerformance
+from src.views import VistaTest, VistaTestAspirant
 
 
 application = create_app('default')
@@ -51,6 +52,10 @@ api.add_resource(VistaInterviewResult,
 
 # Endpoints para evaluaciones de desempeño
 api.add_resource(VistaPerformance, '/abcjobs/performance/<int:idAspirant>')
+
+# Endpoints para pruebas técnicas
+api.add_resource(VistaTest, '/abcjobs/company/test')
+api.add_resource(VistaTestAspirant, '/abcjobs/aspirant/test')
 
 
 jwt = JWTManager(application)
